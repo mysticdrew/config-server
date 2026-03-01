@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     implementation 'io.javalin:javalin:7.0.1'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.21.1'
     runtimeOnly 'ch.qos.logback:logback-classic:1.5.32'
 
     testImplementation platform('org.junit:junit-bom:6.0.3')
