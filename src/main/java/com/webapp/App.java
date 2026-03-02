@@ -10,7 +10,11 @@ public class App {
 
   public static void main(String[] args) {
     AppConfig config = AppConfig.fromEnvironment();
-    logger.info("Starting webapp on port={} env={}", config.port(), config.environment());
+    logger.info(
+        "Starting webapp on port={} env={} configDir={}",
+        config.port(),
+        config.environment(),
+        config.configDir());
     WebServer.create(config).start(config.port());
   }
 }

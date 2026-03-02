@@ -1,13 +1,17 @@
 package com.webapp.config;
 
-public record AppConfig(int port, String environment) {
+import java.nio.file.Path;
+
+public record AppConfig(int port, String environment, Path configDir) {
   private static final int DEFAULT_PORT = 7000;
   private static final String DEFAULT_ENVIRONMENT = "dev";
+  private static final String DEFAULT_CONFIG_DIR = "data/configs";
 
   public static AppConfig fromEnvironment() {
     String environment = valueOrDefault(System.getenv("APP_ENV"), DEFAULT_ENVIRONMENT);
     int port = parsePort(System.getenv("PORT"));
-    return new AppConfig(port, environment);
+    String rawConfigDir = valueOrDefault(System.getenv("APP_CONFIG_DIR"), DEFAULT_CONFIG_DIR);
+    return new AppConfig(port, environment, Path.of(rawConfigDir));
   }
 
   private static String valueOrDefault(String value, String fallback) {

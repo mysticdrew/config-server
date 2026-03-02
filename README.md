@@ -1,6 +1,6 @@
-# javalin-podman-template
+# perfect-click-webapp
 
-Minimal Java 21 + Gradle 9.3.1 + Javalin 7 starter template.
+Internal config supply webapp built with Java 21 + Gradle + Javalin.
 
 ## Quickstart
 
@@ -52,9 +52,31 @@ scripts\dev-check.bat
 ## API
 
 - `GET /health`
-- `POST /api/v1/ping` with JSON body: `{"message":"hello"}`
+- `GET /api/v1/config` list config files and field counts
+- `POST /api/v1/config` with JSON body: `{"name":"application-a"}`
+- `GET /api/v1/config/{name}/json` full config as JSON for the admin UI
+- `GET /api/v1/config/{name}` properties text for consumer applications
+  - Optional query param: `?key=field.name` to return only a single field value
+- `PUT /api/v1/config/{name}/fields/{key}` with JSON body:
+  `{"type":"STRING|INTEGER|LONG|BOOLEAN","value":"raw-value"}`
+- `DELETE /api/v1/config/{name}/fields/{key}`
+- `DELETE /api/v1/config/{name}`
 
 All responses include `X-Request-Id`. You can pass your own request ID using that header.
+
+## Frontend
+
+The web UI is served from `/` and lets you:
+
+- Create/delete `.properties` files
+- Add/edit/delete typed fields
+- Copy the consumer endpoint for each config
+
+## Environment
+
+- `PORT` (default `7000`)
+- `APP_ENV` (default `dev`)
+- `APP_CONFIG_DIR` (default `data/configs`)
 
 ## Podman
 

@@ -1,0 +1,123 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #1e1f22;
+  color: #e6e6e6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: transparent;
+  color: #e6e6e6;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+}
+
+.card {
+  background: #2b2d31;
+  border: 1px solid #3a3d44;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+.config-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #e1e1e1;
+}
+
+.config-item.active {
+  background: #3a3d44;
+}
+
+form {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+input,
+select,
+button {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #4a4f5a;
+  background: #1e1f22;
+  color: #e6e6e6;
+}
+
+button {
+  cursor: pointer;
+  background: #5865f2;
+  border-color: #5865f2;
+  color: white;
+}
+
+button.secondary {
+  background: #3a3d44;
+  color: #e0e0e0;
+}
+
+button.danger {
+  background: #b3261e;
+  border-color: #b3261e;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid #3a3d44;
+  text-align: left;
+  padding: 8px;
+}
+
+.table th {
+  color: #b8b8b8;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.error {
+  color: #ff8d8d;
+  margin-bottom: 8px;
+}
+
+a {
+  color: #c9c9c9;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

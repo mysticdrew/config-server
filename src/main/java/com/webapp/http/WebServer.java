@@ -1,11 +1,12 @@
 package com.webapp.http;
 
-import com.webapp.api.PingApi;
-import com.webapp.api.PingService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.webapp.api.config.ConfigApi;
 import com.webapp.config.AppConfig;
+import com.webapp.configstore.ConfigService;
+import com.webapp.configstore.FileConfigRepository;
 import io.javalin.Javalin;
 import io.javalin.http.HttpResponseException;
-import java.time.Clock;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -22,9 +23,14 @@ public final class WebServer {
   private WebServer() {}
 
   public static Javalin create(AppConfig config) {
-    PingApi pingApi = new PingApi(config.environment(), new PingService(Clock.systemUTC()));
+    ConfigService configService =
+        new ConfigService(new FileConfigRepository(config.configDir(), new ObjectMapper()));
+    ConfigApi configApi = new ConfigApi(configService);
+
     return Javalin.create(
         javalinConfig -> {
+          javalinConfig.staticFiles.add("/public");
+
           javalinConfig.routes.before(
               ctx -> {
                 String requestId = requestIdFromHeader(ctx.header(REQUEST_ID_HEADER));
@@ -75,7 +81,15 @@ public final class WebServer {
           javalinConfig.routes.get(
               "/health",
               ctx -> ctx.json(Map.of("status", "ok", "environment", config.environment())));
-          javalinConfig.routes.post("/api/v1/ping", pingApi.ping());
+
+          javalinConfig.routes.get("/api/v1/config", configApi.listConfigs());
+          javalinConfig.routes.post("/api/v1/config", configApi.createConfig());
+          javalinConfig.routes.get("/api/v1/config/{name}/json", configApi.getConfigJson());
+          javalinConfig.routes.get("/api/v1/config/{name}", configApi.getConfigProperties());
+          javalinConfig.routes.put("/api/v1/config/{name}/fields/{key}", configApi.putField());
+          javalinConfig.routes.delete(
+              "/api/v1/config/{name}/fields/{key}", configApi.deleteField());
+          javalinConfig.routes.delete("/api/v1/config/{name}", configApi.deleteConfig());
         });
   }
 
