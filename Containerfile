@@ -14,7 +14,7 @@ WORKDIR /app
 ENV APP_ENV=prod
 ENV PORT=7000
 
-COPY --from=build /workspace/build/install/javalin-podman-template /app/
+COPY --from=build /workspace/build/install/config-server /app/
 
 EXPOSE 7000
-ENTRYPOINT ["/app/bin/javalin-podman-template"]
+ENTRYPOINT ["/app/bin/config-server"]

@@ -1,6 +1,6 @@
 services:
   webapp:
-    image: javalin-podman-template:dev
+    image: config-server:dev
     build:
       context: .
       dockerfile: Containerfile
